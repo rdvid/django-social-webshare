@@ -3,12 +3,14 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .forms import LoginForm
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
 
 
 def user_login(request):
     """
     perform user login page logic with form validation and crfs protection
     """
+
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
