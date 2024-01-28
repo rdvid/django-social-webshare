@@ -9,11 +9,35 @@
 <body>
     <div id="header">
         <span class="logo">Social Webshare</span>
+        {% if request.user.is_authenticated %}
+            <ul class="menu">
+                <li {% if section == 'dashboard'%}class="selected"{% endif %}>
+                    <a href="{% url 'dashboard' %}">My Dashboard</a>
+                </li>
+                <li {% if section == 'images'%}class="selected"{% endif %}>
+                        <a href="#">Images</a>
+                </li>
+                <li {% if section == 'people'%}class="selected"{% endif %}>
+                    <a href="#">People</a>
+                </li>
+            </ul>
+        {% else %}
+        {% endif %}
+        <span class="user">
+            {% if request.user.is_authenticated %}
+                Hello, {{request.user.first_name|default:request.user.username}},
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit">logout</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+            {% endif %}
+        </span>
     </div>
     <div id="content">
         {% block content %}
         {% endblock %}
     </div>
-
 </body>
 </html>

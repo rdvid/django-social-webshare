@@ -2,10 +2,13 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render
 from django.http import HttpResponse
 from .forms import LoginForm
+from django.contrib.auth.decorators import login_required
 
 
-# Create your views here.
 def user_login(request):
+    """
+    perform user login page logic with form validation and crfs protection
+    """
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -25,4 +28,11 @@ def user_login(request):
             return HttpResponse('Invalid login')
     else:
         form = LoginForm()
-    return render(request, 'account/login.html', { 'form':form })
+    return render(request, 'account/login.html', {'form': form})
+
+
+@login_required
+def dashboard(request):
+    return render(request,
+                  'account/dashboard.html',
+                  {'section': 'dashboard'})
