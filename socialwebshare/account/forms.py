@@ -27,11 +27,32 @@ class UserRegistrationForm(forms.ModelForm):
             raise forms.ValidationError("passwords don't match")
         return cd['password2']
 
+    def clean_email(self):
+        """
+        checks if email already registered in db
+        """
+        email = self.cleaned_data['email']
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError('email already in use')
+        return email
+
 
 class UserEditForm(forms.ModelForm):
+
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email']
+
+    def clean_email(self):
+        """
+        checks if email already registered in db
+        """
+        email = self.cleaned_data['email']
+        user = User.objects.exclude(id=self.instance.id).filter(email=email)
+
+        if user.exists():
+            raise forms.ValidationError('email already in use')
+        return email
 
 
 class ProfileEditForm(forms.ModelForm):
