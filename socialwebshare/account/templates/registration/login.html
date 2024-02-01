@@ -24,4 +24,11 @@
             Don't have an account yet? <a href="{% url 'register' %}">Register now</a>
         </p>
     </div>
+    <div class="social">
+        <ul>
+             <li class="google">
+                 <a href="{% url "social:begin" "google-oauth2" %}">Sign in with Google</a>
+             </li>
+        </ul>
+    </div>
 {% endblock %}

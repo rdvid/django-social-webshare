@@ -4,7 +4,6 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
 from django.contrib.auth.decorators import login_required
-
 from .models import Profile
 
 
@@ -32,7 +31,7 @@ def user_login(request):
             return HttpResponse('Invalid login')
     else:
         form = LoginForm()
-    return render(request, 'account/login.html', {'form': form})
+    return render(request, 'registration/login.html', {'form': form})
 
 
 @login_required
@@ -82,3 +81,4 @@ def edit(request):
         profile_form = ProfileEditForm(instance=request.user.profile)
     return render(request, 'account/edit.html',
                   {'user_form': user_form, 'profile_form': profile_form})
+
