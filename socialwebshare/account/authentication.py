@@ -27,4 +27,4 @@ def create_profile(backend, user, *args, **kwargs):
     """
     create new profile when user is created
     """
-    Profile.objects.create(user=user)
+    Profile.objects.get_or_create(user=user)
